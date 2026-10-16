@@ -1,0 +1,97 @@
+<section id="experience" class="py-12 md:py-16 px-6 md:px-24 bg-brand-dark">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-8 md:mb-12">
+      <h2 class="text-4xl md:text-[56px] font-bold mb-4 md:mb-6 tracking-tighter">Experience</h2>
+      <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Greatest Hits</p>
+    </div>
+
+    <div class="space-y-6 md:space-y-8">
+      @for (exp of experiences; track exp.company) {
+        <div class="reveal group relative overflow-hidden rounded-3xl bg-brand-nav/20 border border-white/5 transition-all duration-500 hover:border-brand-green/30 flex flex-col md:flex-row min-h-auto md:min-h-[350px] glow-border">
+          <!-- Visual Side (40%) -->
+          <div class="md:w-2/5 bg-gradient-to-br flex flex-col items-center justify-center p-8 md:p-12 text-center" [ngClass]="exp.color">
+             <div class="text-3xl md:text-4xl font-black tracking-tighter text-white drop-shadow-2xl mb-3">
+               {{ exp.company }}
+             </div>
+             <div class="w-12 md:w-16 h-[2px] bg-white/20 mb-3"></div>
+             <div class="text-xs font-mono text-white/70">{{ exp.period }}</div>
+          </div>
+
+          <!-- Info Side (60%) -->
+          <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-center">
+            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+              <h3 class="text-xl md:text-2xl font-bold">{{ exp.company }}</h3>
+              <span class="text-xs font-mono text-gray-500">{{ exp.period }}</span>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+              @for (tag of exp.tags; track tag) {
+                <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-white/5 px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-white/5">
+                  {{ tag }}
+                </span>
+              }
+            </div>
+
+            @if (exp.roles && exp.roles.length) {
+              <!-- Promotion Timeline (LinkedIn-style) -->
+              <div class="relative pl-6 space-y-6 before:absolute before:left-[7px] before:top-2.5 before:bottom-2.5 before:w-[2px] before:bg-white/10">
+                @for (role of exp.roles; track role.title; let first = $first) {
+                  <div class="relative">
+                    <!-- Marker Dot -->
+                    <div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center"
+                         [ngClass]="first ? 'border-brand-green bg-brand-green/20' : 'border-gray-500 bg-black'">
+                      <div class="w-1.5 h-1.5 rounded-full" [ngClass]="first ? 'bg-brand-green shadow-[0_0_8px_#6ab01d]' : 'bg-gray-500'"></div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h4 class="text-base md:text-lg font-bold text-white">{{ role.title }}</h4>
+                        @if (first) {
+                          <span class="text-[9px] font-mono uppercase px-2 py-0.5 rounded bg-brand-green/10 text-brand-green border border-brand-green/20 font-bold tracking-wider">Current</span>
+                        }
+                      </div>
+                      <p class="text-xs font-mono text-gray-400">{{ role.period }}</p>
+
+                      @if (role.highlights && role.highlights.length) {
+                        <ul class="space-y-1.5 pt-1">
+                          @for (point of role.highlights; track point) {
+                            <li class="flex gap-2.5 text-xs md:text-sm text-gray-400 leading-relaxed">
+                              <span class="text-brand-green mt-1 flex-shrink-0">
+                                <svg class="w-1.5 h-1.5" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+                              </span>
+                              {{ point }}
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <!-- Single Role -->
+              <div class="flex flex-col mb-4 md:mb-6">
+                <div class="flex flex-wrap items-center gap-2 md:gap-3 text-[12px] md:text-[13px] font-medium text-gray-500">
+                  <span class="text-white opacity-80 font-bold text-base md:text-lg">{{ exp.role }}</span>
+                  <span class="opacity-30 hidden md:inline">•</span>
+                  <span>{{ exp.period }}</span>
+                </div>
+              </div>
+
+              <ul class="space-y-3">
+                @for (point of exp.highlights; track point) {
+                  <li class="flex gap-3 text-sm md:text-[15px] text-gray-400 leading-relaxed">
+                    <span class="text-brand-green mt-1.5 flex-shrink-0">
+                      <svg class="w-1.5 h-1.5" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+                    </span>
+                    {{ point }}
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
