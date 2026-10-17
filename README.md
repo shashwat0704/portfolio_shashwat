@@ -36,6 +36,12 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Deploying to GitHub Pages
+
+The `Deploy Angular app to GitHub Pages` workflow builds the app with the `/portfolio_shashwat/` base path and deploys it whenever changes are pushed to `main`. You can also start it manually from the repository's **Actions** tab.
+
+Before the first deployment, set the repository's Pages source to **GitHub Actions** under **Settings > Pages > Build and deployment**. Once the workflow completes, the site will be available at <https://shashwat0704.github.io/portfolio_shashwat/>.
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
