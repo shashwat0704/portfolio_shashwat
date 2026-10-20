@@ -1,4 +1,12 @@
-<app-cursor></app-cursor>
+<app-splash-cursor
+  [rainbow]="true"
+  [size]="1"
+  [force]="1"
+  [swirl]="3"
+  [trail]="1"
+  [clickSplash]="true"
+  [theme]="themeService.currentTheme()">
+</app-splash-cursor>
 <div class="noise-overlay"></div>
 
 <app-navbar></app-navbar>

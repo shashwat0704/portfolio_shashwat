@@ -12,22 +12,37 @@ import { RevealDirective } from '../../directives/reveal.directive';
 export class AbilitiesComponent {
   abilities = [
     {
-      title: 'Product',
-      level: 'MASTER',
-      description: 'Leading enterprise strategy for Infrastructure Resilience and Disaster Recovery (BCDR). Specialized in Business Impact Analysis (BIA) and optimizing recovery prioritization for 600+ critical applications.',
-      skills: ['BCDR Strategy', 'Infrastructure Resilience', 'Disaster Recovery Drills', 'BIA']
+      title: 'DR Governance at Scale',
+      subtitle: 'Disaster Recovery & Enterprise Resilience',
+      description: 'Governing the annual DR drill lifecycle across 600+ critical banking applications. Managing calendar coordination, multi-stakeholder cluster drills, and rigorous audit-ready report scrutiny.',
+      proofPoints: [
+        'Annual drill calendar across 600+ banking applications',
+        '1,325 DR drill reports scrutinised and closed across FY25 & FY26',
+        '100% of planned Q1 & Q2 cluster drills completed with 500+ stakeholders'
+      ],
+      skills: ['DR Drill Governance', 'BCDR Strategy', 'Cluster Drills', 'BIA', 'Executive Reporting']
     },
     {
-      title: 'Design',
-      level: 'EXPERIENCED',
-      description: 'Expertise in RBI Audit Management and Regulatory Compliance. Ownership of RCSA and thematic assessments, delivering high-impact dashboards for senior leadership and ensuring 100% regulatory adherence.',
-      skills: ['RBI Audit Management', 'RCSA', 'SOP Development', 'Compliance']
+      title: 'Automation & AI Workflows',
+      subtitle: 'Power Platform & GenAI Solutions',
+      description: 'Architecting intelligent workflows and AI tooling to eliminate repetitive manual processes. Leading end-to-end API integrations, alert pipelines, and agentic query assistants.',
+      proofPoints: [
+        'Power Automate workflows save >1 working day of team effort weekly',
+        'Led API integration between incident tooling and DR platform through UAT',
+        'Developing Copilot Studio agent for automated reports and routine queries'
+      ],
+      skills: ['Power Automate', 'Copilot Studio', 'API Integrations', 'Process Optimization', 'BRD & UAT']
     },
     {
-      title: 'Engineering',
-      level: 'NOVICE',
-      description: 'Driving digital transformation with AI-driven automation. Implementing intelligent workflows and chatbots to eliminate manual dependencies and improve reporting efficiency by 40%.',
-      skills: ['Power Automate', 'SQL', 'AI Chatbots', 'Data Analysis']
+      title: 'Audit & Regulatory Compliance',
+      subtitle: 'Governance, Risk & Assurance',
+      description: 'Ensuring resilience operations align with stringent regulatory mandates and internal audit expectations through evidence-backed tracking, RCSA reviews, and timely remediations.',
+      proofPoints: [
+        'Supported regulatory and internal audits with zero overdue DR observations under scope',
+        'Maintained audit-observation overdue rate below 2% across FY25',
+        'Closed key audit observations via system automation and process governance'
+      ],
+      skills: ['Regulatory Audits', 'RCSA Reviews', 'Risk Governance', 'SOP Standardization', 'Remediation Tracking']
     }
   ];
 }

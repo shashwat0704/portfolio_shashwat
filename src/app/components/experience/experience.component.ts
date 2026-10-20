@@ -14,16 +14,16 @@ export class ExperienceComponent {
     {
       company: 'Axis Bank',
       period: 'June 2024 - Present',
-      tags: ['Strategy', 'Infrastructure', 'BCDR', 'Risk Management', 'Leadership'],
+      tags: ['Strategy', 'Infrastructure', 'BCDR', 'Risk Management', 'Power Automate', 'Leadership'],
       roles: [
         {
           title: 'Manager – IT Strategy & Infrastructure',
           period: 'April 2026 - Present',
           current: true,
           highlights: [
-            'Directing enterprise resilience strategy for 600+ critical banking applications, ensuring 100% regulatory compliance.',
-            'Architecting Disaster Recovery (BCDR) frameworks that protect billion-dollar financial operations.',
-            'Driving AI-driven automation workflows and architectural standards across cross-functional operations.'
+            'Govern the annual DR drill calendar across 600+ applications, from schedule coordination to audit-ready closure.',
+            'Scrutinised and closed 1,325 DR drill reports over two fiscal years (FY25 & FY26) with 100% accuracy and on-time closure.',
+            'Building a Copilot Studio agent over DR platform data for automated report generation and routine stakeholder queries (in progress).'
           ]
         },
         {
@@ -31,12 +31,13 @@ export class ExperienceComponent {
           period: 'June 2024 - April 2026',
           current: false,
           highlights: [
-            'Governed infrastructure resilience programs and Disaster Recovery drills across core banking platforms.',
-            'Bridged technical infrastructure teams and C-suite leadership through data-driven risk management insights.'
+            'Built Power Automate workflows and dashboards (schedule alerts, drill status, ageing exceptions) saving more than 1 working day per week.',
+            'Led API integration between incident tooling and the internal DR platform, from requirements through UAT and change closure; eliminated manual entry and closed an audit point.',
+            'Supported regulatory and internal audits with no overdue DR-related observations under my scope.'
           ]
         }
       ],
-      description: 'Lead enterprise strategy and planning initiatives for Infrastructure Resilience and Disaster Recovery. Act as a strategic liaison between infrastructure, security, and leadership teams to translate technical data into executive insights.',
+      description: 'Govern enterprise Disaster Recovery (BCDR) operations and infrastructure resilience across 600+ banking applications. Drive intelligent automation and API integrations to streamline reporting, eliminate manual operational overhead, and uphold audit readiness.',
       color: 'from-green-600/40 to-emerald-900/40'
     },
     {

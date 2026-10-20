@@ -12,37 +12,52 @@ import { RevealDirective } from '../../directives/reveal.directive';
 export class ProjectsComponent {
   projects = [
     {
-      title: 'Enterprise BCDR Strategy',
+      title: 'DR Drill Governance at 600+ Application Scale',
       company: 'Axis Bank',
+      status: 'Delivered',
       caseStudy: {
-        problem: 'The organization lacked a centralized resilience framework for 600+ critical banking applications, creating significant regulatory and operational risk.',
-        approach: 'Developed a comprehensive BCDR roadmap aligned with ISO 22301 standards and RBI guidelines, integrating real-time monitoring and governance.',
-        outcome: 'Achieved 100% regulatory compliance and established a fail-safe infrastructure resilience model for the bank\'s core operations.'
+        problem: 'Drill scheduling, tracking, and closure were conducted manually across hundreds of application teams, risking schedule drift and fragmented visibility.',
+        approach: 'Established a governed annual DR calendar for 600+ applications paired with automated weekly status and ageing dashboards presented to senior management.',
+        outcome: 'Completed 100% of planned Q1 and Q2 cluster DR drills across 500+ stakeholders, providing early visibility of pending closures and zero schedule drift.'
       },
-      tags: ['Strategy', 'BCDR', 'Compliance'],
-      color: 'from-blue-500/20 to-indigo-500/20'
+      tags: ['DR Governance', 'Calendar Coordination', 'Executive Dashboards', 'Risk Management'],
+      color: 'from-green-500/20 to-emerald-500/20'
     },
     {
-      title: 'AI-Driven Transformation',
+      title: 'Automating the DR Reporting Loop',
       company: 'Axis Bank',
+      status: 'Delivered',
       caseStudy: {
-        problem: 'Manual reporting and manual incident response workflows were consuming 100+ man-hours weekly, leading to slow turnaround times.',
-        approach: 'Led the integration of intelligent chatbots and Power Automate workflows to handle repetitive reporting and triage tasks.',
-        outcome: 'Reduced manual intervention by 45% and reporting effort by 40%, allowing technical teams to focus on high-value strategic tasks.'
+        problem: 'Recurring drill notifications, multi-stakeholder follow-ups, and cyclic status reporting consumed extensive team hours every week.',
+        approach: 'Built automated Power Automate workflows for drill schedule alerts, ageing notifications, and automated governance dashboards.',
+        outcome: 'Saves more than 1 working day of team effort every week, while cutting 4–5 hours of manual dashboard preparation per cycle.'
       },
-      tags: ['AI', 'Automation', 'Power Automate'],
-      color: 'from-emerald-500/20 to-teal-500/20'
+      tags: ['Power Automate', 'Workflow Automation', 'Dashboards', 'Process Optimization'],
+      color: 'from-blue-500/20 to-cyan-500/20'
     },
     {
-      title: 'Infrastructure Resilience Drills',
+      title: 'Incident-to-DR Platform API Integration',
       company: 'Axis Bank',
+      status: 'Delivered',
       caseStudy: {
-        problem: 'Disaster Recovery drills were inconsistent, with a success rate of only 75% and fragmented reporting methods.',
-        approach: 'Standardized the governing methodology for DR drills and implemented a unified dashboard for tracking drill performance and gaps.',
-        outcome: 'Executed 300+ successful drills, improving the success rate to 95% and reducing reporting turnaround time by 20%.'
+        problem: 'Incident details were manually re-typed from incident tracking tools into DR request forms, introducing data discrepancy risks and audit friction.',
+        approach: 'Led business requirements (BRD), access approvals, SIT/UAT validation, and change management for a direct API integration between tooling and the DR platform.',
+        outcome: 'Incident data now populates automatically without manual intervention, eliminating errors and cleanly closing an audit observation.'
       },
-      tags: ['Infrastructure', 'Planning', 'DR Drills'],
-      color: 'from-orange-500/20 to-red-500/20'
+      tags: ['API Integration', 'BRD & UAT', 'Audit Compliance', 'Change Management'],
+      color: 'from-purple-500/20 to-indigo-500/20'
+    },
+    {
+      title: 'Agentic Assistant for DR Queries',
+      company: 'Axis Bank',
+      status: 'In Progress',
+      caseStudy: {
+        problem: 'Application teams frequently raised repetitive BCP/DR compliance queries and status checks that required manual investigation and replies.',
+        approach: 'Developing an intelligent Microsoft Copilot Studio agent connected to DR platform data to answer user queries and generate on-demand reports.',
+        outcome: 'In progress: Automating routine stakeholder inquiries and report queries to streamline response times and enable self-service DR insights.'
+      },
+      tags: ['Copilot Studio', 'AI Agents', 'Automation', 'Self-Service'],
+      color: 'from-amber-500/20 to-orange-500/20'
     }
   ];
 }

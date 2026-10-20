@@ -1,35 +1,41 @@
-<section id="abilities" class="py-12 md:py-16 px-6 md:px-24 bg-brand-dark">
+<section id="abilities" class="py-12 md:py-16 px-4 sm:px-6 md:px-16 lg:px-24 bg-brand-dark">
   <div class="max-w-6xl mx-auto">
     <div class="mb-8 md:mb-12">
-      <h2 class="text-4xl md:text-[56px] font-bold mb-4 md:mb-6 tracking-tighter">Abilities</h2>
-      <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Disciplines</p>
+      <h2 class="text-3xl sm:text-4xl md:text-[56px] font-bold mb-3 md:mb-6 tracking-tighter">Core Competencies</h2>
+      <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Evidence-Backed Pillars</p>
     </div>
 
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
       @for (ability of abilities; track ability.title) {
-        <div class="reveal group p-8 md:p-10 rounded-3xl bg-brand-nav/40 border border-white/5 hover:border-brand-green/30 transition-all duration-500 h-full flex flex-col glow-border">
-          <div class="mb-6 md:mb-10">
-            <h3 class="text-xl md:text-2xl font-bold mb-1">{{ ability.title }}</h3>
-          </div>
-          
-          <div class="mb-6 md:mb-10">
-            <div class="flex justify-between text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">
-              <span class="opacity-40 font-mono">Proficiency</span>
-              <span>{{ ability.level }}</span>
+        <div class="reveal group p-6 sm:p-8 md:p-10 rounded-3xl bg-brand-nav/40 border border-white/5 hover:border-brand-green/30 transition-all duration-500 h-full flex flex-col justify-between glow-border">
+          <div class="space-y-4">
+            <div>
+              <p class="text-[10px] font-mono text-brand-green uppercase tracking-widest font-semibold mb-1">{{ ability.subtitle }}</p>
+              <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight">{{ ability.title }}</h3>
             </div>
-            <div class="h-[1px] bg-white/10 w-full relative">
-              <div class="absolute inset-y-0 left-0 bg-white" 
-                   [style.width]="ability.level === 'MASTER' ? '100%' : ability.level === 'EXPERIENCED' ? '70%' : '40%'"></div>
+            
+            <p class="text-sm text-gray-400 leading-relaxed">
+              {{ ability.description }}
+            </p>
+
+            <div class="space-y-2 pt-2 border-t border-white/5">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-gray-500">Key Evidence</p>
+              <ul class="space-y-2">
+                @for (proof of ability.proofPoints; track proof) {
+                  <li class="flex items-start gap-2.5 text-xs text-gray-300 leading-relaxed">
+                    <span class="text-brand-green mt-1 flex-shrink-0">
+                      <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+                    </span>
+                    <span>{{ proof }}</span>
+                  </li>
+                }
+              </ul>
             </div>
           </div>
 
-          <p class="text-sm md:text-[15px] text-gray-400 leading-relaxed md:leading-[1.6] mb-6 md:mb-10 flex-grow">
-            {{ ability.description }}
-          </p>
-
-          <div class="flex flex-wrap gap-2 mt-auto">
+          <div class="flex flex-wrap gap-2 pt-6 mt-6 border-t border-white/5">
             @for (skill of ability.skills; track skill) {
-              <span class="px-2 md:px-3 py-1 bg-white/5 rounded-full text-[9px] md:text-[10px] font-mono text-gray-500 border border-white/5">
+              <span class="px-2.5 py-1 bg-white/5 rounded-full text-[9px] md:text-[10px] font-mono text-gray-400 border border-white/5">
                 {{ skill }}
               </span>
             }

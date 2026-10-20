@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,12 @@ export class NavbarComponent {
   lastScrollTop = 0;
   isHovered = false;
   isMenuOpen = false;
+
+  constructor(public themeService: ThemeService) {}
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

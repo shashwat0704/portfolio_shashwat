@@ -1,9 +1,23 @@
 <!doctype html>
-<html lang="en" data-beasties-container>
+<html lang="en" class="dark" data-beasties-container>
 <head>
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('portfolio_theme');
+        if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="utf-8">
   <title>Shashwat Singh Bhadoriya | IT Strategy & Infrastructure Leader</title>
-  <base href="/shashwat_portfolio/">
+  <base href="/portfolio_shashwat/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -13,14 +27,14 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shashwat0704.github.io/shashwat_portfolio/">
+  <meta property="og:url" content="https://shashwat0704.github.io/portfolio_shashwat/">
   <meta property="og:title" content="Shashwat Singh Bhadoriya | IT Strategy &amp; Infrastructure Leader">
   <meta property="og:description" content="Expert in Infrastructure Resilience and Disaster Recovery. Managing 600+ critical applications at Axis Bank.">
   <meta property="og:image" content="profile.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://shashwat0704.github.io/shashwat_portfolio/">
+  <meta property="twitter:url" content="https://shashwat0704.github.io/portfolio_shashwat/">
   <meta property="twitter:title" content="Shashwat Singh Bhadoriya | IT Strategy &amp; Infrastructure Leader">
   <meta property="twitter:description" content="Expert in Infrastructure Resilience and Disaster Recovery. Managing 600+ critical applications at Axis Bank.">
   <meta property="twitter:image" content="profile.png">
@@ -36,7 +50,7 @@
         "@type": "Organization",
         "name": "Axis Bank"
       },
-      "url": "https://shashwat0704.github.io/shashwat_portfolio/",
+      "url": "https://shashwat0704.github.io/portfolio_shashwat/",
       "sameAs": [
         "https://linkedin.com/in/shashwat-singh-bhadoriya",
         "https://github.com/shashwat0704"
@@ -50,8 +64,8 @@
       ]
     }
   </script>
-<style>*,:before,:after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / .5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}html,body{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1));font-family:Inter,ui-sans-serif,system-ui,sans-serif;--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1));margin:0;padding:0;min-height:100vh;overflow-x:hidden}html{scroll-behavior:smooth}</style><link rel="stylesheet" href="styles-E5Y74VL3.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-E5Y74VL3.css"></noscript></head>
+<style>*,:before,:after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / .5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}html,body{background-color:var(--bg-primary);color:var(--text-primary);font-family:Inter,ui-sans-serif,system-ui,sans-serif;margin:0;padding:0;min-height:100vh;overflow-x:hidden;width:100%;transition:background-color .3s ease,color .3s ease}:root{--bg-primary:#000000;--bg-surface:#0d0d0d;--bg-nav:rgba(20, 20, 20, .95);--bg-card:rgba(14, 22, 16, .65);--text-primary:#ffffff;--text-secondary:#9ca3af;--text-muted:#6b7280;--border-subtle:rgba(255, 255, 255, .08);--border-card:rgba(255, 255, 255, .08);--border-active:rgba(168, 255, 62, .35);--card-bg:rgba(14, 22, 16, .65);--card-shadow:0 10px 30px -10px rgba(0, 0, 0, .75), 0 0 15px rgba(106, 176, 29, .06);--card-shadow-hover:0 24px 55px -10px rgba(0, 0, 0, .95), 0 0 32px rgba(106, 176, 29, .4);--input-bg:rgba(0, 0, 0, .55);--input-border:rgba(255, 255, 255, .12);--brand-green-text:#6ab01d;--scrollbar-track:#000000;--scrollbar-thumb:#222222;color-scheme:dark}@property --border-angle{syntax:"<angle>";inherits:false;initial-value:0deg;}html{scroll-behavior:smooth}</style><link rel="stylesheet" href="styles-HPS2IN5T.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-HPS2IN5T.css"></noscript></head>
 <body>
   <app-root></app-root>
-<script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-QHQPIDG4.js" type="module"></script></body>
+<script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-6ZEJHT2P.js" type="module"></script></body>
 </html>

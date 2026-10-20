@@ -1,45 +1,439 @@
-<section id="education" class="py-12 md:py-16 px-6 md:px-24 bg-brand-dark">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-      <!-- Education -->
-      <div class="reveal">
-        <div class="mb-8 md:mb-12">
-          <h2 class="text-4xl md:text-[56px] font-bold mb-4 md:mb-6 tracking-tighter">Education</h2>
-          <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Academic Background</p>
-        </div>
-        
-        <div class="p-6 md:p-8 rounded-3xl bg-brand-card border border-white/5 glow-border">
-          <div class="flex justify-between items-start mb-6">
-            <div>
-              <h3 class="text-2xl font-bold">{{ education.school }}</h3>
-              <p class="text-brand-green">{{ education.degree }}</p>
+<section id="education" class="py-12 md:py-16 px-4 sm:px-6 md:px-16 lg:px-24 bg-brand-dark">
+  <div class="max-w-6xl mx-auto space-y-12 md:space-y-16">
+    
+    <!-- 1. Academic Background (Education) -->
+    <div class="reveal">
+      <div class="mb-6 md:mb-10">
+        <h2 class="text-3xl sm:text-4xl md:text-[52px] font-bold mb-2 md:mb-3 tracking-tighter text-white">Education</h2>
+        <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Academic Background</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        @for (edu of educationList; track edu.school) {
+          <div class="p-5 sm:p-6 md:p-8 rounded-3xl bg-brand-card border border-white/5 glow-border transition-all hover:border-brand-green/20 flex flex-col justify-between">
+            <div class="flex justify-between items-start gap-3 mb-4">
+              <div>
+                <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-white">{{ edu.school }}</h3>
+                <p class="text-brand-green text-xs sm:text-sm md:text-base font-medium mt-1">{{ edu.degree }}</p>
+              </div>
+              @if (edu.period) {
+                <div class="text-[11px] sm:text-xs md:text-sm font-mono text-gray-500 whitespace-nowrap">{{ edu.period }}</div>
+              }
             </div>
-            <div class="text-sm font-mono text-gray-500">{{ education.period }}</div>
+            @if (edu.grade) {
+              <div>
+                <span class="inline-block px-3.5 py-1 bg-white/5 rounded-full text-xs font-bold text-white border border-white/5">
+                  {{ edu.grade }}
+                </span>
+              </div>
+            }
           </div>
-          <div class="inline-block px-4 py-2 bg-white/5 rounded-full text-sm font-bold text-white">
-            {{ education.grade }}
+        }
+      </div>
+    </div>
+
+    <!-- 2. Dynamic Certifications Showcase (30+ credentials) -->
+    <div class="reveal pt-6 border-t border-white/10">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 md:gap-6 mb-6 md:mb-8">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-2">
+            <h2 class="text-3xl sm:text-4xl md:text-[52px] font-bold tracking-tighter text-white">Certifications</h2>
+            <!-- Total count badge -->
+            <span class="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-brand-green/10 text-brand-green border border-brand-green/30">
+              {{ totalCertificatesCount }}+ Verified Credentials
+            </span>
           </div>
+          <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+            Professional Credentials, Standards & Specialized Accreditations
+          </p>
+        </div>
+
+        <!-- Toolbar: Discreet Owner Key + Search bar + Sort -->
+        <div class="flex items-center gap-2 sm:gap-3 w-full md:w-auto">
+          <!-- Discreet Owner Access Key Button -->
+          <button (click)="toggleOwnerPrompt()" 
+                  [title]="isOwner ? 'Owner Mode Active (Click to manage)' : 'Owner Access'" 
+                  class="p-2.5 sm:p-3 rounded-2xl border transition-all flex-shrink-0"
+                  [ngClass]="isOwner ? 'bg-brand-green/10 text-brand-green border-brand-green/30 shadow-[0_0_12px_rgba(106,176,29,0.3)]' : 'border-white/5 text-gray-600 hover:text-brand-green hover:border-brand-green/20'">
+            <svg *ngIf="!isOwner" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <svg *ngIf="isOwner" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+            </svg>
+          </button>
+
+          <!-- Search Input -->
+          <div class="relative flex-grow sm:w-64 md:w-72">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-500">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </span>
+            <input type="text" 
+                   [(ngModel)]="searchQuery" 
+                   placeholder="Search certifications..." 
+                   class="w-full bg-brand-nav/60 border border-white/10 rounded-2xl pl-10 pr-9 py-2 sm:py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-green/50 transition-colors">
+            <button *ngIf="searchQuery" 
+                    (click)="clearSearch()" 
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-white text-xs">
+              ✕
+            </button>
+          </div>
+
+          <!-- Sort Select -->
+          <select [(ngModel)]="sortBy" class="bg-brand-nav/60 border border-white/10 rounded-2xl px-2.5 sm:px-3 py-2 sm:py-2.5 text-xs text-gray-300 focus:outline-none focus:border-brand-green/50 cursor-pointer hidden sm:block">
+            <option value="recent">Sort: Newest</option>
+            <option value="name">Sort: Name</option>
+            <option value="issuer">Sort: Issuer</option>
+          </select>
         </div>
       </div>
 
-      <!-- Certifications -->
-      <div class="reveal">
-        <div class="mb-8 md:mb-12">
-          <h2 class="text-4xl md:text-[56px] font-bold mb-4 md:mb-6 tracking-tighter">Certifications</h2>
-          <p class="text-[10px] md:text-[12px] font-bold text-gray-500 uppercase tracking-[0.2em]">Professional Development</p>
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-6 md:mb-8">
+        @for (cat of categories; track cat) {
+          <button (click)="setCategory(cat)"
+                  class="px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-mono transition-all flex items-center gap-1.5 sm:gap-2"
+                  [ngClass]="selectedCategory === cat 
+                    ? 'bg-brand-green text-black font-bold shadow-[0_0_15px_rgba(106,176,29,0.3)]' 
+                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'">
+            <span>{{ cat }}</span>
+            <span class="text-[9px] sm:text-[10px] opacity-70 px-1.5 py-0.2 rounded-full" [ngClass]="selectedCategory === cat ? 'bg-black/20 text-black' : 'bg-white/10 text-gray-300'">
+              {{ getCategoryCount(cat) }}
+            </span>
+          </button>
+        }
+      </div>
+
+      <!-- Certifications Grid -->
+      <div *ngIf="filteredCertificates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        @for (cert of visibleCertificates; track cert.id) {
+          <div class="group relative p-5 sm:p-6 rounded-3xl bg-brand-card/70 border border-white/5 hover:border-brand-green/30 transition-all duration-300 glow-border flex flex-col justify-between">
+            <div class="space-y-3">
+              <!-- Card Top Row: Issuer & Badges -->
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-mono text-brand-green font-bold uppercase tracking-wider truncate max-w-[160px]">
+                  {{ cert.issuer }}
+                </span>
+
+                <div class="flex items-center gap-1.5">
+                  <span *ngIf="isDraft(cert)" class="px-2 py-0.5 rounded text-[8px] font-mono uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">
+                    DRAFT
+                  </span>
+                  <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5 truncate max-w-[120px]">
+                    {{ cert.category }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Certificate Title -->
+              <h4 class="text-sm sm:text-base font-bold text-white group-hover:text-brand-green transition-colors leading-snug">
+                {{ cert.name }}
+              </h4>
+
+              <!-- Meta info -->
+              <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-mono text-gray-500 pt-1">
+                <span *ngIf="cert.issued">{{ cert.issued }}</span>
+                <span *ngIf="cert.issued && cert.credentialId">·</span>
+                <span *ngIf="cert.credentialId" class="truncate max-w-[160px]">ID: {{ cert.credentialId }}</span>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="pt-4 mt-4 border-t border-white/5 flex items-center justify-between gap-2 text-xs">
+              <a [href]="cert.verifyUrl" 
+                 target="_blank" 
+                 class="inline-flex items-center gap-1.5 text-gray-400 group-hover:text-white hover:text-brand-green transition-colors font-medium text-[11px] sm:text-xs">
+                <span>Verify Credential</span>
+                <svg class="w-3.5 h-3.5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+
+              <div class="flex items-center gap-2">
+                <button *ngIf="cert.pdf || (isDraft(cert) && cert.pdf)" 
+                        (click)="previewPdf(cert)"
+                        class="px-2.5 py-1 rounded-lg bg-brand-green/10 text-brand-green border border-brand-green/20 hover:bg-brand-green hover:text-black transition-colors font-mono text-[9px] sm:text-[10px] font-bold">
+                  View PDF
+                </button>
+
+                <!-- Owner Mode Remove Button (Works for both existing and draft certs) -->
+                <button *ngIf="isOwner" 
+                        (click)="removeCertificate(cert, $event)" 
+                        class="px-2 py-1 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors font-mono text-[10px] flex items-center gap-1 border border-red-500/20"
+                        title="Remove Certificate from Portfolio">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  <span>Remove</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredCertificates.length === 0" class="py-12 sm:py-16 text-center rounded-3xl bg-brand-card/20 border border-white/5 space-y-3 px-4">
+        <p class="text-gray-400 text-xs sm:text-sm">No certifications matched "<span class="text-white">{{ searchQuery }}</span>"</p>
+        <button (click)="clearSearch(); setCategory('All')" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-brand-green text-xs font-mono rounded-xl border border-white/10 transition-colors">
+          Reset Search & Category Filters
+        </button>
+      </div>
+
+      <!-- Expand / Show All Button (when not searching) -->
+      <div *ngIf="!searchQuery && selectedCategory === 'All' && totalCertificatesCount > defaultLimit" class="pt-8 flex flex-col items-center justify-center gap-2">
+        <button (click)="toggleShowAll()" 
+                class="px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl bg-brand-nav/60 hover:bg-brand-green/10 border border-white/10 hover:border-brand-green/40 text-xs sm:text-sm font-semibold text-white transition-all flex items-center gap-2.5 sm:gap-3 glow-border">
+          <span *ngIf="!showAllCertificates">View all {{ totalCertificatesCount }} certifications</span>
+          <span *ngIf="showAllCertificates">Show fewer certifications</span>
+          <svg class="w-4 h-4 text-brand-green transition-transform duration-300" 
+               [ngClass]="showAllCertificates ? 'rotate-180' : ''" 
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <p class="text-[11px] sm:text-xs font-mono text-gray-500">
+          Showing {{ visibleCertificates.length }} of {{ totalCertificatesCount }} credentials
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. OWNER-ONLY: Add a Certificate Interface -->
+    <div *ngIf="isOwner" class="pt-12 border-t border-white/10 reveal">
+      <!-- Section Header -->
+      <div class="mb-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-2">
+          <div class="flex items-center gap-3">
+            <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Add a certificate</h3>
+            <span class="px-2.5 py-0.5 rounded text-[10px] font-mono uppercase bg-brand-green/10 text-brand-green border border-brand-green/30 font-bold tracking-wider">
+              OWNER ONLY
+            </span>
+          </div>
+          <button (click)="exitOwnerMode()" class="text-xs font-mono text-gray-500 hover:text-red-400 transition-colors flex items-center gap-1.5">
+            Exit Owner Mode ✕
+          </button>
+        </div>
+        <p class="text-sm text-gray-400 leading-relaxed max-w-3xl">
+          Nothing is uploaded from here, because this site has no server. Add your certificate, check the preview, then export it and commit the files to your repo.
+        </p>
+      </div>
+
+      <!-- 2 Columns Grid: Form (Left) & Previews / Publish (Right) -->
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <!-- Left Column: Form -->
+        <div class="lg:col-span-7 space-y-5 bg-brand-nav/20 p-6 md:p-8 rounded-3xl border border-white/5 glow-border">
+          <!-- CERTIFICATE NAME * -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+              CERTIFICATE NAME *
+            </label>
+            <input type="text" [(ngModel)]="newCert.name" placeholder="ISO 22301 Lead Implementer"
+                   class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-brand-green/60 text-sm">
+          </div>
+
+          <!-- ISSUER * & CATEGORY -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+                ISSUER *
+              </label>
+              <input type="text" [(ngModel)]="newCert.issuer" placeholder="PECB"
+                     class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-brand-green/60 text-sm">
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+                CATEGORY *
+              </label>
+              <select [(ngModel)]="newCert.category" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-green/60 cursor-pointer">
+                <option value="Resilience & BCDR">Resilience & BCDR</option>
+                <option value="AI & Automation">AI & Automation</option>
+                <option value="Cloud & Infrastructure">Cloud & Infrastructure</option>
+                <option value="Governance & Compliance">Governance & Compliance</option>
+                <option value="Business Analysis & Agile">Business Analysis & Agile</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ISSUED (MONTH) & CREDENTIAL ID -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+                ISSUED (MONTH)
+              </label>
+              <input type="month" [(ngModel)]="newCert.issued"
+                     class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-brand-green/60 text-sm">
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+                CREDENTIAL ID
+              </label>
+              <input type="text" [(ngModel)]="newCert.credentialId" placeholder="Optional"
+                     class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-brand-green/60 text-sm">
+            </div>
+          </div>
+
+          <!-- VERIFICATION LINK * -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+              VERIFICATION LINK *
+            </label>
+            <input type="url" [(ngModel)]="newCert.verifyUrl" placeholder="https://www.credly.com/badges/..."
+                   class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-brand-green/60 text-sm">
+          </div>
+
+          <!-- CERTIFICATE PDF (MAX 5 MB) -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold ml-1">
+              CERTIFICATE PDF (MAX 5 MB)
+            </label>
+            <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" class="hidden">
+            
+            <div (click)="fileInput.click()" 
+                 (dragover)="onDragOver($event)" 
+                 (drop)="onFileDrop($event)" 
+                 class="border border-dashed border-white/20 hover:border-brand-green/40 transition-colors rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer bg-black/40 text-center group">
+              <div *ngIf="!newCert.pdfFileName" class="space-y-3 flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green group-hover:scale-110 transition-transform">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                  </svg>
+                </div>
+                <p class="text-xs md:text-sm text-gray-300">Drop a PDF here or <span class="text-brand-green font-medium underline">click to choose</span></p>
+              </div>
+              
+              <div *ngIf="newCert.pdfFileName" class="flex items-center gap-3 text-left">
+                <div class="w-10 h-10 rounded-xl bg-brand-green/20 flex items-center justify-center text-brand-green">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-white break-all">{{ newCert.pdfFileName }}</p>
+                  <p class="text-xs text-gray-500 font-mono">Ready to attach · Click to change</p>
+                </div>
+                <button type="button" (click)="$event.stopPropagation(); removeSelectedFile()" class="ml-2 text-xs text-red-400 hover:text-red-300">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add to preview button -->
+          <button type="button" 
+                  (click)="addToPreview()" 
+                  [disabled]="!isFormValid()" 
+                  class="w-full py-4 bg-brand-green text-black font-bold rounded-xl hover:shadow-[0_0_20px_#6ab01d] transition-all text-sm font-sans tracking-wide disabled:opacity-40 disabled:cursor-not-allowed">
+            Add to preview
+          </button>
         </div>
 
-        <div class="space-y-4">
-          @for (cert of certifications; track cert.name) {
-            <a [href]="cert.url" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl bg-brand-card border border-white/5 hover:border-brand-green/20 transition-all group glow-border">
-              <div class="w-2 h-2 rounded-full bg-brand-green group-hover:shadow-[0_0_8px_#6ab01d]"></div>
-              <span class="text-gray-400 group-hover:text-white transition-colors flex-grow">{{ cert.name }}</span>
-              <svg class="w-4 h-4 text-gray-600 group-hover:text-brand-green transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
-            </a>
-          }
+        <!-- Right Column: Previews & Publish -->
+        <div class="lg:col-span-5 space-y-6">
+          <!-- ADDED THIS SESSION (X) -->
+          <div>
+            <p class="text-[10px] font-mono text-gray-400 uppercase tracking-widest font-semibold mb-3">
+              ADDED THIS SESSION ({{ draftCertificates.length }})
+            </p>
+
+            <div *ngIf="draftCertificates.length === 0" class="p-6 rounded-2xl bg-brand-card/20 border border-white/5 text-center text-xs text-gray-500 font-mono">
+              No draft certificates added in this session yet.
+            </div>
+
+            <div *ngIf="draftCertificates.length > 0" class="space-y-4">
+              @for (draft of draftCertificates; track draft.id; let idx = $index) {
+                <div class="p-5 rounded-2xl bg-brand-card/70 border border-white/10 glow-border space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono text-brand-green font-bold uppercase tracking-wider">{{ draft.issuer }}</span>
+                    <span class="px-2 py-0.5 rounded text-[9px] font-mono uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">DRAFT</span>
+                  </div>
+                  
+                  <div>
+                    <h4 class="text-base font-bold text-white leading-snug">{{ draft.name }}</h4>
+                    <p class="text-xs font-mono text-gray-400 mt-1">
+                      {{ draft.issued || 'Undated' }} <span *ngIf="draft.credentialId">· ID {{ draft.credentialId }}</span>
+                    </p>
+                  </div>
+
+                  <div class="flex flex-wrap gap-2 pt-1">
+                    <button *ngIf="draft.pdfUrl" (click)="previewPdf(draft)" class="px-3 py-1.5 bg-brand-green text-black font-semibold rounded-lg text-xs hover:opacity-90">
+                      Preview PDF
+                    </button>
+                    <button *ngIf="draft.pdfFile" (click)="downloadPdf(draft)" class="px-3 py-1.5 bg-white/5 border border-white/15 text-white font-mono rounded-lg text-xs hover:bg-white/10">
+                      Download as {{ draft.pdf }}
+                    </button>
+                  </div>
+
+                  <div class="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
+                    <a [href]="draft.verifyUrl" target="_blank" class="text-gray-400 hover:text-brand-green transition-colors">
+                      Test verify link ↗
+                    </a>
+                    <button (click)="removeDraft(idx)" class="text-red-400 hover:text-red-300 transition-colors">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Publish Changes Panel -->
+          <div *ngIf="draftCertificates.length > 0 || removedCertificateIds.length > 0" class="p-6 rounded-2xl bg-[#08150c] border border-brand-green/30 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+                Publish changes
+              </h4>
+              <button *ngIf="removedCertificateIds.length > 0" 
+                      (click)="restoreRemovedCertificates()" 
+                      class="text-[10px] font-mono text-amber-400 hover:underline">
+                Restore removed ({{ removedCertificateIds.length }})
+              </button>
+            </div>
+
+            <ol class="space-y-2 text-xs text-gray-300 leading-relaxed list-decimal list-inside">
+              <li *ngIf="draftCertificates.length > 0">Download each new PDF above and place in <span class="text-brand-green font-mono">public/certificates/</span></li>
+              <li>Copy the complete updated array below into <span class="text-brand-green font-mono">src/app/data/certificates.ts</span></li>
+              <li>Commit and push to GitHub to redeploy your changes.</li>
+            </ol>
+
+            <div *ngIf="removedCertificateIds.length > 0" class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono flex items-center justify-between">
+              <span>{{ removedCertificateIds.length }} existing certificate(s) removed</span>
+              <span class="text-[10px] text-amber-400">Reflected in export</span>
+            </div>
+
+            <div class="relative bg-black/80 rounded-xl p-3.5 border border-white/10 text-[11px] font-mono text-gray-300 overflow-x-auto max-h-48 scrollbar-thin">
+              <pre>{{ getFormattedJson() }}</pre>
+            </div>
+
+            <div>
+              <button (click)="copyEntries()" class="px-4 py-2 bg-brand-green text-black font-semibold rounded-lg text-xs hover:shadow-[0_0_15px_#6ab01d] transition-all flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                {{ copySuccess ? 'Copied updated array!' : 'Copy updated array' }}
+              </button>
+            </div>
+
+            <p class="text-[10px] text-gray-500 font-mono">
+              Changes persist in this browser. To publish to all visitors, copy the array and commit.
+            </p>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Owner Verification Modal -->
+  <div *ngIf="showPinModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-brand-nav p-6 md:p-8 rounded-3xl border border-white/10 max-w-sm w-full space-y-4 glow-border">
+      <div class="flex items-center justify-between">
+        <h4 class="text-lg font-bold text-white">Owner Access</h4>
+        <button (click)="showPinModal = false" class="text-gray-500 hover:text-white">✕</button>
+      </div>
+      <p class="text-xs text-gray-400">Enter your owner passcode to unlock certificate editing on this device.</p>
+      <input type="password" [(ngModel)]="pinInput" (keydown.enter)="verifyPin()" placeholder="Enter passcode"
+             class="w-full bg-black/50 border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-green/60 text-sm">
+      <p *ngIf="pinError" class="text-xs text-red-400 font-mono">{{ pinError }}</p>
+      <div class="flex gap-3 pt-2">
+        <button (click)="verifyPin()" class="flex-1 py-2.5 bg-brand-green text-black font-bold rounded-xl text-xs hover:shadow-[0_0_15px_#6ab01d] transition-all">
+          Unlock
+        </button>
+        <button (click)="showPinModal = false" class="px-4 py-2.5 bg-white/5 border border-white/10 text-gray-400 rounded-xl text-xs hover:text-white">
+          Cancel
+        </button>
       </div>
     </div>
   </div>

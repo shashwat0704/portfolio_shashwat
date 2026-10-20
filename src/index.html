@@ -1,6 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('portfolio_theme');
+        if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="utf-8">
   <title>Shashwat Singh Bhadoriya | IT Strategy & Infrastructure Leader</title>
   <base href="/">

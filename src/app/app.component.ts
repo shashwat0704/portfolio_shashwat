@@ -6,7 +6,8 @@ import { AbilitiesComponent } from './components/abilities/abilities.component';
 import { ExperienceComponent } from './components/experience/experience.component';
 import { EducationComponent } from './components/education/education.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CursorComponent } from './components/cursor/cursor.component';
+import { SplashCursorComponent } from './components/splash-cursor';
+import { ThemeService } from './services/theme.service';
 import { AboutComponent } from './components/about/about.component';
 import { ServicesComponent } from './components/services/services.component';
 import { TechSkillsComponent } from './components/tech-skills/tech-skills.component';
@@ -27,11 +28,13 @@ import { ProjectsComponent } from './components/projects/projects.component';
     ProjectsComponent,
     EducationComponent,
     FooterComponent,
-    CursorComponent
+    SplashCursorComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'portfolio-shashwat';
+
+  constructor(public themeService: ThemeService) {}
 }
