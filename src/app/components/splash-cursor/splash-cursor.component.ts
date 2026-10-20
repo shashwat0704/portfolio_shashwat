@@ -25,9 +25,9 @@ interface QualityConfig {
 }
 
 const QUALITY: Record<SplashQuality, QualityConfig> = {
-  low: { sim: 64, dye: 512, iterations: 10 },
-  medium: { sim: 96, dye: 1024, iterations: 16 },
-  high: { sim: 128, dye: 1440, iterations: 20 }
+  low: { sim: 48, dye: 384, iterations: 6 },
+  medium: { sim: 64, dye: 512, iterations: 10 },
+  high: { sim: 96, dye: 768, iterations: 14 }
 };
 
 const BLOOM_RESOLUTION = 256;
@@ -339,6 +339,7 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
   @Input({ transform: booleanAttribute }) clickSplash: boolean = true;
   @Input({ transform: booleanAttribute }) intro: boolean = true;
   @Input({ transform: booleanAttribute }) contained: boolean = false;
+  @Input({ transform: numberAttribute }) mobileScale: number = 0.15;
   @Input() theme: 'dark' | 'light' = 'dark';
   @Input({ transform: numberAttribute }) zIndex: number = 50;
   @Input() className: string = '';
@@ -360,20 +361,31 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
     return [ROOT, this.className].filter(Boolean).join(' ');
   }
 
+  isMobileView(): boolean {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.innerWidth <= 768 ||
+      (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches)
+    );
+  }
+
   private getSettings() {
+    const isMobile = this.isMobileView();
+    const scale = isMobile ? clamp(this.mobileScale, 0.08, 0.25) : 1.0;
+
     return {
       palette: (Array.isArray(this.colors) && this.colors.length ? this.colors : ['#ffffff']).map(parseColor),
       rainbow: this.rainbow,
-      colorSpeed: Math.max(0, this.colorSpeed),
-      intensity: Math.max(0, this.intensity),
-      size: Math.max(0.05, this.size),
-      force: Math.max(0, this.force),
-      swirl: Math.max(0, this.swirl),
-      trail: Math.max(0.05, this.trail),
-      momentum: Math.max(0.05, this.momentum),
+      colorSpeed: Math.max(0, this.colorSpeed) * (isMobile ? 0.8 : 1.0),
+      intensity: Math.max(0, this.intensity) * (isMobile ? scale * 1.1 : 1.0),
+      size: Math.max(0.05, this.size) * (isMobile ? Math.max(0.2, scale * 1.8) : 1.0),
+      force: Math.max(0, this.force) * scale,
+      swirl: Math.max(0, this.swirl) * (isMobile ? 0.6 : 1.0),
+      trail: Math.max(0.05, this.trail) * (isMobile ? 0.35 : 1.0),
+      momentum: Math.max(0.05, this.momentum) * (isMobile ? 0.4 : 1.0),
       shading: clamp(this.shading, 0, 1),
       glow: clamp(this.glow, 0, 1),
-      quality: QUALITY[this.quality] ? this.quality : 'high',
+      quality: isMobile ? 'medium' : (QUALITY[this.quality] ? this.quality : 'high'),
       clickSplash: this.clickSplash,
       contained: this.contained,
       light: this.theme === 'light'
@@ -387,8 +399,13 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
 
     this.handleParentPosition();
 
+    // Defer WebGL compilation until after initial frame has painted smoothly (no main-thread blocking)
     this.ngZone.runOutsideAngular(() => {
-      this.initFluid();
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => this.initFluid(), { timeout: 300 });
+      } else {
+        setTimeout(() => this.initFluid(), 60);
+      }
     });
   }
 
@@ -789,26 +806,27 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
 
     const burst = (x: number, y: number, now: number) => {
       const s = this.getSettings();
+      const isMobile = this.isMobileView();
       const seed = Math.random() * Math.PI * 2;
       const aspect = canvas.width / canvas.height;
       let u = use('burst');
       gl.uniform1i(u['uTarget'], velocity.read.attach(0));
       gl.uniform1f(u['aspectRatio'], aspect);
       gl.uniform2f(u['point'], x, y);
-      gl.uniform1f(u['radius'], radiusFor(3));
-      gl.uniform1f(u['strength'], 1100 * s.force);
+      gl.uniform1f(u['radius'], radiusFor(isMobile ? 1.0 : 3));
+      gl.uniform1f(u['strength'], (isMobile ? 220 : 1100) * s.force);
       gl.uniform1f(u['seed'], seed);
       blit(velocity.write);
       velocity.swap();
       const offset = Math.random();
-      const amount = 1.6 * s.intensity;
+      const amount = (isMobile ? 0.3 : 1.6) * s.intensity;
       const first = inkFor(colorAt(offset, now), amount);
       const second = inkFor(colorAt(offset + 0.3, now), amount);
       u = use('crown');
       gl.uniform1i(u['uTarget'], dye.read.attach(0));
       gl.uniform1f(u['aspectRatio'], aspect);
       gl.uniform2f(u['point'], x, y);
-      gl.uniform1f(u['radius'], radiusFor(1.6));
+      gl.uniform1f(u['radius'], radiusFor(isMobile ? 0.7 : 1.6));
       gl.uniform3f(u['colorA'], first[0], first[1], first[2]);
       gl.uniform3f(u['colorB'], second[0], second[1], second[2]);
       gl.uniform1f(u['seed'], seed);
@@ -1076,6 +1094,11 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
       this.initFluid();
     };
 
+    const onWindowResize = () => {
+      resize();
+    };
+
+    window.addEventListener('resize', onWindowResize, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
     window.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -1093,6 +1116,7 @@ export class SplashCursorComponent implements OnInit, AfterViewInit, OnDestroy, 
       this.wakeSimulation = undefined;
       disposed = true;
       cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onWindowResize);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('touchstart', onTouchStart);

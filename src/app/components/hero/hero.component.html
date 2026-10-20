@@ -33,10 +33,28 @@
       </div>
 
       <div class="flex justify-center md:justify-end order-1 md:order-2">
-        <div class="relative w-full max-w-[240px] xs:max-w-[280px] sm:max-w-[340px] md:max-w-[420px] aspect-square">
-          <div class="absolute inset-0 bg-brand-green/20 rounded-full blur-[50px] md:blur-[90px] animate-pulse-slow"></div>
-          <div class="relative w-full h-full rounded-full border border-white/10 overflow-hidden bg-black flex items-center justify-center glow-border">
-            <img src="profile.png" alt="Shashwat Singh Bhadoriya" class="w-full h-full object-cover">
+        <div class="profile-wrapper max-w-[240px] xs:max-w-[280px] sm:max-w-[340px] md:max-w-[420px]">
+          <!-- Apple Ambient Deep Spatial Glow -->
+          <div class="absolute inset-0 bg-brand-green/20 rounded-full blur-[60px] md:blur-[90px] animate-pulse-slow pointer-events-none"></div>
+
+          <!-- Dynamic Soft Outer Glow (spins with the beam) -->
+          <div class="profile-beam-aura" aria-hidden="true">
+            <div class="profile-beam"></div>
+          </div>
+
+          <!-- Circular Ring with Animated Border -->
+          <div class="profile-ring">
+            <!-- Rotating Light Beam -->
+            <div class="profile-beam" aria-hidden="true"></div>
+
+            <!-- Subtle Track Border -->
+            <div class="profile-ring-track" aria-hidden="true"></div>
+
+            <!-- Inner Pure Circular Photo Disc -->
+            <div class="profile-photo-container">
+              <img src="profile.png" alt="Shashwat Singh Bhadoriya" class="profile-photo" loading="eager" fetchpriority="high">
+              <div class="profile-rim-light" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
       </div>

@@ -6,24 +6,32 @@ import { Directive, ElementRef, OnInit, OnDestroy, NgZone } from '@angular/core'
 })
 export class RevealDirective implements OnInit, OnDestroy {
   private observer: IntersectionObserver | null = null;
-  private mouseMoveHandler: ((e: MouseEvent) => void) | null = null;
+  private cleanups: Array<() => void> = [];
 
   constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone) {}
 
   ngOnInit(): void {
     if (typeof window === 'undefined') return;
 
-    // 1. Apple-style Scroll Reveal with Staggered Child Delays
+    const target = this.el.nativeElement;
+
+    // Fast path: if element is already within viewport on load, activate immediately (no 2-3s delay)
+    const rect = target.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      target.classList.add('active');
+      const cards = target.querySelectorAll<HTMLElement>('.glow-border');
+      cards.forEach(card => card.classList.add('child-active'));
+    }
+
+    // Smooth scroll reveal for below-the-fold content with eager 80px bottom margin
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const target = this.el.nativeElement;
           target.classList.add('active');
 
-          // Stagger any child cards smoothly (80ms increments)
           const cards = target.querySelectorAll<HTMLElement>('.glow-border');
           cards.forEach((card, idx) => {
-            card.style.transitionDelay = `${idx * 80}ms`;
+            card.style.transitionDelay = `${Math.min(idx * 40, 160)}ms`;
             card.classList.add('child-active');
           });
 
@@ -31,24 +39,32 @@ export class RevealDirective implements OnInit, OnDestroy {
         }
       });
     }, {
-      threshold: 0.08,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.02,
+      rootMargin: '0px 0px 80px 0px'
     });
 
-    this.observer.observe(this.el.nativeElement);
+    this.observer.observe(target);
 
-    // 2. Apple Spotlight Effect: Update cursor coordinates on cards for interactive radial lighting
+    // Optimized Apple Spotlight Effect: throttled with requestAnimationFrame & passive listeners
     this.ngZone.runOutsideAngular(() => {
-      const target = this.el.nativeElement;
       const cards = target.querySelectorAll<HTMLElement>('.glow-border');
       
       cards.forEach(card => {
-        card.addEventListener('mousemove', (e: MouseEvent) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
+        let rafId: number | null = null;
+        const handler = (e: MouseEvent) => {
+          if (rafId !== null) return;
+          rafId = requestAnimationFrame(() => {
+            const cardRect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', `${e.clientX - cardRect.left}px`);
+            card.style.setProperty('--mouse-y', `${e.clientY - cardRect.top}px`);
+            rafId = null;
+          });
+        };
+
+        card.addEventListener('mousemove', handler, { passive: true });
+        this.cleanups.push(() => {
+          if (rafId !== null) cancelAnimationFrame(rafId);
+          card.removeEventListener('mousemove', handler);
         });
       });
     });
@@ -56,5 +72,7 @@ export class RevealDirective implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    this.cleanups.forEach(cleanup => cleanup());
+    this.cleanups = [];
   }
 }

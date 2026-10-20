@@ -18,4 +18,12 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Subtle, minimal fluid transparency on mobile view & touch screens */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .splash-cursor__canvas {
+    opacity: 0.85;
+  }
 }

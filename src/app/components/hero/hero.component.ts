@@ -33,14 +33,14 @@ export class HeroComponent implements OnInit, OnDestroy {
           this.observer?.disconnect();
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.05 });
 
-    // Fallback: If not observed in 1.5s, animate anyway
+    // Fallback: If not observed in 200ms, animate anyway
     setTimeout(() => {
       if (!this.hasAnimated) {
         this.animateCounters();
       }
-    }, 1500);
+    }, 200);
   }
 
   ngOnDestroy(): void {
